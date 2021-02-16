@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="onion-architecture-demo:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>onion-architecture-demo</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="onion-architecture-demo-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="onion-architecture-demo:war exploded" />
+    </root>
+  </artifact>
+</component>
