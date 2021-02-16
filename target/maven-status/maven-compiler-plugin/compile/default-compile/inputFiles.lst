@@ -1,0 +1,6 @@
+/Users/bangmaple/Desktop/onion-architecture-demo/src/main/java/com/bangmaple/onion_architecture_demo/services/impl/HelloServiceImpl.java
+/Users/bangmaple/Desktop/onion-architecture-demo/src/main/java/com/bangmaple/onion_architecture_demo/services/HelloService.java
+/Users/bangmaple/Desktop/onion-architecture-demo/src/main/java/com/bangmaple/onion_architecture_demo/repositories/helper/PersistenceManager.java
+/Users/bangmaple/Desktop/onion-architecture-demo/src/main/java/com/bangmaple/onion_architecture_demo/repositories/helper/ICRUDRepository.java
+/Users/bangmaple/Desktop/onion-architecture-demo/src/main/java/com/bangmaple/onion_architecture_demo/HelloServlet.java
+/Users/bangmaple/Desktop/onion-architecture-demo/src/main/java/com/bangmaple/onion_architecture_demo/repositories/helper/JpaRepository.java

@@ -20,25 +20,30 @@ public abstract class JpaRepository<K, V> implements ICRUDRepository<K, V> {
     }
 
     @Override
-    @SneakyThrows
+    @SneakyThrows //checked-exception
     @SuppressWarnings("unchecked")
     public CompletableFuture<Optional<K>> find(V v) {
+        //Reflection API
         Class<K> clazz = (Class<K>) ((ParameterizedType) getClass()
                 .getSuperclass().getGenericSuperclass())
                 .getActualTypeArguments()[0];
         return CompletableFuture.supplyAsync(() -> Optional
-                .ofNullable(emf.createEntityManager().find(clazz, v)));
+                .ofNullable(getEntityManager().find(clazz, v)));
     }
 
     @Override
     @SneakyThrows
     @SuppressWarnings("unchecked")
     public CompletableFuture<Optional<List<K>>> findAll() {
+        //Java Persistence Query Language
+        //SQL Dialect
+        //JPA (ORM)
         Class<K> clazz = (Class<K>) ((ParameterizedType) getClass()
                 .getSuperclass().getGenericSuperclass())
                 .getActualTypeArguments()[0];
         return CompletableFuture.supplyAsync(() -> Optional.
                 ofNullable(emf.createEntityManager()
+                        //SELECT * FROM Users
                         .createQuery("select t from "
                                 + clazz.getName() + " t", clazz)
                         .getResultList()));
@@ -49,12 +54,14 @@ public abstract class JpaRepository<K, V> implements ICRUDRepository<K, V> {
     public CompletableFuture<Void> add(K k) {
         return CompletableFuture.runAsync(() -> {
             EntityManager em = getEntityManager();
+            EntityTransaction et = em.getTransaction();
             try {
-                EntityTransaction et = em.getTransaction();
                 et.begin();
                 em.persist(k);
+                //INSERT INTO Users VALUES (a,b,c,x,y,z)
                 et.commit();
             } catch (PersistenceException e) {
+                et.rollback();
                 e.printStackTrace();
             }
         });
@@ -63,17 +70,17 @@ public abstract class JpaRepository<K, V> implements ICRUDRepository<K, V> {
     @Override
     @SneakyThrows
     public CompletableFuture<Void> update(K k) {
-        return CompletableFuture.supplyAsync(() -> {
+        return CompletableFuture.runAsync(() -> {
             EntityManager em = getEntityManager();
+            EntityTransaction et = em.getTransaction();
             try {
-                EntityTransaction et = em.getTransaction();
                 et.begin();
                 em.merge(k);
                 et.commit();
             } catch (PersistenceException e) {
+                et.rollback();
                 e.printStackTrace();
             }
-            return null;
         });
     }
 
@@ -82,8 +89,8 @@ public abstract class JpaRepository<K, V> implements ICRUDRepository<K, V> {
     public CompletableFuture<Void> delete(K k) {
         return CompletableFuture.runAsync(() -> {
             EntityManager em = getEntityManager();
+            EntityTransaction et = em.getTransaction();
             try {
-                EntityTransaction et = em.getTransaction();
                 et.begin();
                 if (!em.contains(k)) {
                     em.remove(em.merge(k));
@@ -92,6 +99,7 @@ public abstract class JpaRepository<K, V> implements ICRUDRepository<K, V> {
                 em.remove(k);
                 et.commit();
             } catch (PersistenceException e) {
+                et.rollback();
                 e.printStackTrace();
             }
         });

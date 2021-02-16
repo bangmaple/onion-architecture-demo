@@ -17,7 +17,7 @@ public class PersistenceManager {
     public static final boolean DEBUG = false;
     private static PersistenceManager INSTANCE = null;
     private final EntityManagerFactory emf;
-    public static String PERSISTENCE_UNIT_NAME = "OnionPU";
+    public static String PERSISTENCE_UNIT_NAME = "OnionArchPU";
 
     private PersistenceManager() {
         this.emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);

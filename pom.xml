@@ -29,9 +29,9 @@
             <version>2.7.7</version>
         </dependency>
         <dependency>
-            <groupId>org.jboss.weld.se</groupId>
-            <artifactId>weld-se-core</artifactId>
-            <version>3.1.5.Final</version>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-shaded</artifactId>
+            <version>3.1.6.Final</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
